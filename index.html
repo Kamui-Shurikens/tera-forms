@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <title>Tera-forms</title>
+    <link rel="icon" href="tera-forms.png" />
+    <link rel="stylesheet" href="styles.css" />
+    <script type="text/javascript">
+      var status = "light";
+      function myfunction(){
+        if(status == "light")
+        {
+        document.body.style.backgroundColor = "#000000";
+        document.getElementById("mode-toggle").innerHTML = "Switch to light mode";
+        status = "dark";
+        }
+        else if(status == "dark")
+        {
+        document.body.style.backgroundColor = "#7dcfb6";
+        document.getElementById("mode-toggle").innerHTML = "Switch to dark mode";
+        status = "light";
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <button type="button" name="button" class="dark-button" id="mode-toggle" onclick="myfunction()"> Switch to dark mode </button>
+    <div class="seventy-width">
+      <nav>
+        <ul id="nav">
+          <div class="nav-flex">
+            <li class="navlink" id="website-title">
+              <a href="/">TERA FORMS</a>
+            </li>
+            <div class="navlink-container">
+              <li class="navlink"><a href="sorry.html">ABOUT</a></li>
+              <li class="navlink"><a href="sorry.html">CONTACT</a></li>
+              <li class="navlink"><a href="sorry.html">SIGN UP</a></li>
+              <li class="navlink">
+                <a class="active" href="sorry.html">HOME</a>
+              </li>
+            </div>
+          </div>
+        </ul>
+      </nav>
+      <div class="desc-flex">
+        <div class="desc-box">
+          <h3 class="desc-title">
+            Forms made <i><u>easy!</u></i>
+          </h3>
+
+          We help you make forms easily. Our software provides many widgets so
+          that you can build the forms you like.<br /><br />
+
+          <a href="form.html">
+            <div class="button">TRY NOW!</div>
+          </a>
+        </div>
+        <div class="home-illust">
+          <img src="page1-img.svg" class="image1" alt="page 1 image" />
+        </div>
+      </div>
+    </div>
+</body>
+</html>

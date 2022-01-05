@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Form Parser</title>
+
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Open+Sans&display=swap");
+
+      * {
+        padding: 0;
+        margin: 0;
+        font-family: "Open Sans", sans-serif;
+      }
+
+      body {
+        background-color: #7dcfb6;
+      }
+
+      button {
+        background-color: #3cb993;
+        border: none;
+        color: white;
+        border-radius: 5px;
+        padding: 6px 12px;
+      }
+
+      .tb-back {
+        background-color: #acf2d1;
+        padding: 2px 6px;
+        border-radius: 5px;
+        border: solid 1px white;
+      }
+
+      .column {
+        float: left;
+        padding: 2%px;
+      }
+
+      .left {
+        padding: 10px;
+        height: 100vh;
+        width: 21%;
+        background-color: #7dcfb6;
+        border-right: solid 1px black;
+      }
+
+      .right {
+        background-color: #7dcfb6;
+        min-height: 100vh;
+        padding: 5%;
+        max-width: 66%;
+      }
+
+      .component-panel {
+        width: 45vw;
+        background-color: white;
+        margin-bottom: 7px;
+        border-radius: 7px;
+        padding: 6px 12px;
+        padding-top: 25px;
+        padding-bottom: 10px;
+      }
+
+      .hide {
+        display: none;
+      }
+
+      .form-textbox {
+        border: none;
+        border-bottom: solid 2px green;
+        padding: 4px 3px;
+        width: 80%;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="row">
+      <div class="column left">
+        <div id="tools">
+          Tools
+          <br />
+          <button id="textbox_add">Text Box</button>
+
+          <div id="textbox_options" class="hide">
+            <h5>Text Box Label</h5>
+            <input type="text" id="textbox_label" class="tb-back" />
+            <h5>Text Box Placeholder</h5>
+            <input
+              type="text"
+              id="textbox_placeholder"
+              class="tb-back"
+            /><br /><br />
+            <button id="textbox_create">Create</button>
+          </div>
+          <button type="button" name="button" id = "MCQ_add" style="display:block; margin-top: 10px" onclick="show_mcq()">MCQ</button>
+
+          <div id="MCQ_options" class="hide">
+            <h5>Question statement</h5>
+            <input type="text" id="question_statement" class="tb-back" />
+            <br>
+            <br>
+            <div id = "options">
+
+            </div>
+            <button id="MCQ_create" onclick="create_mcq()">Create MCQ</button>
+            <button type="button" name="button" onclick="add_option()">Add option</button>
+          </div>
+
+        </div>
+        <br />
+        <div class="xml_input">
+          Xml Output : <br />
+          to be implemented
+        </div>
+      </div>
+
+      <div class="column right">
+        <h3>Your Form Here</h3>
+        <br />
+
+        <div id="form_panel"></div>
+
+        </div>
+      </div>
+    </div>
+    <script>
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // sumit's js
+
+    var option_count = 0;
+
+    function show_mcq(){
+          var mcq_select = document.getElementById("MCQ_options");
+          mcq_select.setAttribute("class", "block");
+          option_count = 0;
+    }
+
+    function add_option(){
+          option_count++;
+
+          var op_set = document.getElementById("options");
+          op_set.innerHTML = op_set.innerHTML + "<label for="+">Option "+ option_count +" </label><input type=\"text\" name="+" value="+" class=\"tb-back\" id=\"op"+ option_count +"\" ><br><br>" ;
+    }
+
+    function get_option_html() {
+      var q_state = document.getElementById("question_statement").value;
+      var option_html = `<div class="component-panel"><h5>${q_state}</h5><br><br>`;
+
+      for(var i = 1 ; i<= option_count ; i++)
+      {
+        var y = document.getElementById(`op${i}`).value;
+        option_html += `<input type="radio" id="option_${i}" name="fav_language" value=""><label for="option_${i}">${y}</label><br>`;
+      }
+      return option_html;
+    }
+
+    function create_mcq(){
+      var x = document.getElementById("form_panel");
+      x.innerHTML += get_option_html();
+      option_count = 1;
+      var mcq_select = document.getElementById("MCQ_options");
+      mcq_select.setAttribute("class", "hide");
+      var op_set = document.getElementById("options");
+      op_set.innerHTML = "";
+    }
+
+
+
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+      var formString = [];
+
+      var formPanel = document.getElementById("form_panel");
+      var xmlInput = document.getElementById("xml_input");
+      var parseButton = document.getElementById("parse_xml");
+      var tools = document.getElementById("tools");
+
+      window.onload = function (e) {
+        textboxAdd = document.getElementById("textbox_add");
+
+        textboxAdd.addEventListener("click", () => {
+          textboxOptionPanel = document.getElementById("textbox_options");
+
+          textboxLabel = document.getElementById("textbox_label");
+          textboxPlaceholder = document.getElementById("textbox_placeholder");
+          textboxLabel.value = "";
+          textboxPlaceholder.value = "";
+
+          textboxOptionPanel.style.display = "block";
+        });
+
+        textboxCreate = document.getElementById("textbox_create");
+        textboxCreate.addEventListener("click", createTextbox);
+      };
+
+      function getTextboxString(index, dataObj) {
+        st = `
+       <div id="form-component-${index}" class="component-panel">
+                    <h5>${dataObj.label}</h5>
+                <br>
+                <input type="text" id="" class="form-textbox" placeholder="${dataObj.placeholder}"> </input>
+                <br>
+                <br>
+                <span onClick="removeComponent(${index});" class="remove-btn"><u><small>Remove</small></u></span>
+                </div>`;
+
+        return st;
+      }
+
+      function createTextbox() {
+        textboxLabel = document.getElementById("textbox_label");
+        textboxPlaceholder = document.getElementById("textbox_placeholder");
+
+        formString.push({
+          label: textboxLabel.value,
+          placeholder: textboxPlaceholder.value,
+        });
+
+        formPanel.innerHTML = "";
+
+        for (let i = 0; i < formString.length; i++) {
+          formPanel.innerHTML += getTextboxString(i, formString[i]);
+        }
+
+        textboxOptionPanel = document.getElementById("textbox_options");
+        textboxOptionPanel.style.display = "none";
+      }
+
+      function removeComponent(idx) {
+        formString.splice(idx, 1);
+        formPanel.innerHTML = "";
+        for (let i = 0; i < formString.length; i++) {
+          formPanel.innerHTML += getTextboxString(i, formString[i]);
+        }
+      }
+    </script>
+</body>
+</html>

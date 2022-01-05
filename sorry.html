@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <title>Tera-Forms</title>
+    <link rel="icon" href="tera-forms.png" />
+    <link rel="stylesheet" href="styles.css" />
+    <script type="text/javascript">
+
+    var status = "light";
+    function myfunction(){
+      if(status == "light")
+      {
+      document.body.style.backgroundColor = "#000000";
+      document.getElementById("mode-toggle").innerHTML = "Switch to light mode";
+      status = "dark";
+      }
+      else if(status == "dark")
+      {
+      document.body.style.backgroundColor = "#7dcfb6";
+      document.getElementById("mode-toggle").innerHTML = "Switch to dark mode";
+      status = "light";
+      }
+    }
+
+    </script>
+  </head>
+  <body>
+    <button type="button" name="button" class="dark-button" id="mode-toggle" onclick="myfunction()"> Switch to dark mode </button>
+    <h1 class="sorry">Sorry for inconvenience 😕</h1>
+    <p class="sorry">We are still at developing stage.</p>
+
+    <div class="message">
+      <h4 class="drop">Drop us a message meanwhile !</h4>
+      <form class="form" action="thanks.html" method="post">
+        <center>
+          <label for="" class="label-text">Your name : </label>
+          <input type="text" name="name" value="" />
+          <br />
+          <label for="" class="label-text">Your email : </label>
+          <input type="email" name="" value="" />
+          <br />
+          <br />
+          <label for="" class="text-area">Your message : </label>
+          <textarea name="name" rows="8" cols="30"></textarea>
+          <br />
+          <input type="submit" name="" value="Submit message !" />
+        </center>
+      </form>
+    </div>
+</body>
+</html>
