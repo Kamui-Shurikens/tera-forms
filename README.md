@@ -2,4 +2,4 @@
 its a custom forms website , currently in developing stage.
 
 
-link - https://sumit-personal-site.netlify.app/
+link - https://kamui-shurikens.github.io/tera-forms/
